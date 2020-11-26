@@ -3,7 +3,7 @@ import { View, Button } from 'react-native';
 
 import { useAuth } from '../../hooks/auth';
 
-const DashBoard2: React.FC = () => {
+const DashBoard: React.FC = () => {
   const { signOut } = useAuth();
 
   return (
@@ -13,4 +13,4 @@ const DashBoard2: React.FC = () => {
   );
 };
 
-export default DashBoard2;
+export default DashBoard;
