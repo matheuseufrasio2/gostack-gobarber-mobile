@@ -14,7 +14,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  user: object;
+  user: User;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
@@ -22,7 +22,13 @@ interface AuthContextData {
 
 interface AuthState {
   token: string;
-  user: object;
+  user: User;
+}
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar_url: string;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -39,6 +45,8 @@ const AuthProvider: React.FC = ({ children }) => {
       ]);
 
       if (token[1] && user[1]) {
+        api.defaults.headers.authorization = `Bearer ${token[1]}`;
+
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
 
@@ -49,6 +57,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
+    console.log(email, password);
     const response = await api.post('sessions', {
       email,
       password,
@@ -60,6 +69,8 @@ const AuthProvider: React.FC = ({ children }) => {
       ['@Gobarbarber:token', token],
       ['@Gobarbarber:user', JSON.stringify(user)],
     ]);
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ token, user });
   }, []);
