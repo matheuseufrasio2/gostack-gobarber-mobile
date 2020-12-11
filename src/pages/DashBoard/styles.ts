@@ -31,12 +31,12 @@ export const UserAvatar = styled.Image`
 `;
 export const ProfileButton = styled.TouchableOpacity``;
 export const ProvidersList = styled(FlatList as new () => FlatList<Provider>)`
-  padding: 32px 24px 0;
+  padding: 0 24px;
 `;
 
 export const ProvidersListTitle = styled.Text`
   font-size: 24px;
-  margin-bottom: 24px;
+  margin: 32px 0 24px;
   color: #f4ede8;
   font-family: 'RobotSlab-Medium';
 `;
@@ -45,7 +45,7 @@ export const ProviderContainer = styled(RectButton)`
   background: #3e3b47;
   border-radius: 10px;
   padding: 20px;
-  margin-top: 16px;
+  margin-bottom: 16px;
   flex-direction: row;
   align-items: center;
 `;
