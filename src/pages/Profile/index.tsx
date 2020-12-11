@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/mobile';
 import Icon from 'react-native-vector-icons/Feather';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker/src/index';
 import {
   View,
   ScrollView,
@@ -127,9 +127,24 @@ const Profile: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
-  // const handleUpdateAvatar = useCallback(() => {
-  //   ImagePicker.show
-  // }, []);
+  const handleUpdateAvatar = useCallback(() => {
+    ImagePicker.(
+      {
+        mediaType: 'photo',
+      },
+      response => {
+        if (response.didCancel) {
+          return;
+        }
+        if (response.errorCode) {
+          Alert.alert('Erro ao atualizar seu avatar');
+          return;
+        }
+
+        const source = { uri: response.uri };
+      },
+    );
+  }, []);
 
   return (
     <>
@@ -146,7 +161,7 @@ const Profile: React.FC = () => {
             <BackButton onPress={handleGoBack}>
               <Icon name="chevron-left" size={24} color="#ff9000" />
             </BackButton>
-            <UserAvatarButton onPress={() => {}}>
+            <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{ uri: user.avatar_url }} />
             </UserAvatarButton>
             <View>
